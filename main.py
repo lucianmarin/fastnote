@@ -1,13 +1,14 @@
 import hashlib
+import json
 import time
 from datetime import datetime
 from email.utils import formatdate
+from pathlib import Path
 from fastapi import FastAPI, Request, Form, HTTPException, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from typing import Optional
-from utils import get_notes, put_notes, time_ago
+from typing import Dict, Optional
 from local import DEBUG, PASSWORD_HASH
 
 async def set_auth_state(request: Request):
@@ -20,9 +21,26 @@ if DEBUG:
     app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
-templates.env.filters["time_ago"] = time_ago
 templates.env.filters['email_format'] = lambda ts: formatdate(ts)
 templates.env.filters['date_format'] = lambda ts, f: datetime.fromtimestamp(ts).strftime(f)
+
+DATA_FILE = Path("data/notes.json")
+
+def get_notes() -> Dict[str, dict]:
+    if not DATA_FILE.exists():
+        return {}
+    with open(DATA_FILE, "r") as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return {}
+
+def put_notes(notes: Dict[str, dict]):
+    # Sort by key (timestamp) descending
+    sorted_notes = dict(sorted(notes.items(), key=lambda item: item[0], reverse=True))
+
+    with open(DATA_FILE, "w") as f:
+        json.dump(sorted_notes, f, indent=4, ensure_ascii=False)
 
 
 def get_common_context(request: Request):
