@@ -1,0 +1,23 @@
+[Unit]
+Description=Nostr service
+After=network.target nginx.service
+
+[Service]
+User=lucian
+Group=lucian
+PIDFile=/home/lucian/fastnote/note.pid
+RuntimeDirectory=uvicorn
+WorkingDirectory=/home/lucian/fastnote
+ExecStart=/home/lucian/fastnote/venv/bin/uvicorn main:app --uds note.socket
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=default.target
+
+# sudo cp note.service /etc/systemd/system/note.service
+# sudo systemctl daemon-reload
+# sudo systemctl restart note.service
+# start on boot
+# sudo systemctl enable note.service

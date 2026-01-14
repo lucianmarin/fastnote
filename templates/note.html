@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main">
+    <div class="center">
+        <div class="entry">
+            <div class="meta">
+                {% if previous_id %}
+                    <a href="/note/{{ previous_id }}">
+                        Backward
+                    </a>
+                {% endif %}
+                {% if previous_id and next_id %}
+                    <b>&frasl;</b>
+                {% endif %}
+                {% if next_id %}
+                    <a href="/note/{{ next_id }}">
+                        Forward
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="entry">
+            <div class="meta">
+                <a href="/note/{{ id }}">
+                    {{ id|int|date_format("%b %-d, %Y") }}
+                </a>
+                <b>&frasl;</b>
+                {% if auth %}
+                    <a href="/edit?id={{ id }}">edit</a>
+                    <b>&frasl;</b>
+                    <a href="/delete/{{ id }}">erase</a>
+                {% else %}
+                    <a href="/note/{{ id }}">
+                        {{ id|int|date_format("%A") }}
+                    </a>
+                {% endif %}
+            </div>
+
+            <h4>
+                <a class="title" target="_blank" href="{{ note.url }}">
+                    {{ note.title }}
+                </a>
+            </h4>
+
+            {% if note.quote %}
+                <p class="quote">{{ note.quote }}</p>
+            {% endif %}
+
+            {% if note.note %}
+                <p class="note">{{ note.note }}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main">
+    <div class="center">
+        <form class="search" action="/search" method="get" autocomplete="off">
+            <input name="q" type="text" value="{{ q }}" placeholder="Keywords" autofocus onfocus="this.selectionStart = this.selectionEnd = this.value.length" />
+        </form>
+        {% for id, note in results.items() %}
+            <div class="entry">
+                <h4>
+                    <a href="/note/{{ id }}">{{ note.title }}</a>
+                </h4>
+            </div>
+        {% endfor %}
+        <div class="status">{{ label }}</div>
+    </div>
+</div>
+{% endblock %}

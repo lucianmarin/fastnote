@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main">
+    <div class="center">
+        <form action="/login" method="post" autocomplete="off">
+            <input class="key" type="text" name="key" placeholder="Keyphrase" required autofocus autocapitalize="off">
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</div>
+{% endblock %}

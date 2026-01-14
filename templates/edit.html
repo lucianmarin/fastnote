@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script>
+    function load() {
+        var desc = document.getElementById('desc');
+        var note = document.getElementById('note');
+        expand(desc);
+        expand(note);
+    }
+    function expand(element) {
+        element.style.height = 'auto';
+        element.style.height = (element.scrollHeight - 10) + 'px';
+    }
+    function prevent(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+        }
+    }
+</script>
+
+<div class="main">
+    <div class="center">
+        <form action="/edit" method="post" autocomplete="off">
+            <input type="url" name="url" placeholder="URL"
+                value="{{ note.url }}" required />
+            <input type="text" name="title" placeholder="Title"
+                value="{{ note.title }}" required />
+            <textarea id="desc" name="quote" placeholder="Quote"
+                rows="4" cols="80" oninput="expand(this)"
+                onkeydown="prevent(event)">{{ note.quote if note.quote else '' }}</textarea>
+            <textarea id="note" class="last" name="note" placeholder="Note"
+                rows="1" cols="80" oninput="expand(this)"
+                onkeydown="prevent(event)">{{ note.note if note.note else '' }}</textarea>
+            <input type="hidden" name="id" value="{{ id }}" />
+            <input type="submit" value="Update" />
+        </form>
+    </div>
+</div>
+{% endblock %}

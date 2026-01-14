@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main">
+    <div class="center">
+        {% for id, note in notes.items() %}
+            <div class="entry">
+                <div class="meta">
+                    <a href="/note/{{ id }}">
+                        {{ id|int|date_format("%b %-d, %Y") }}
+                    </a>
+                    <b>&frasl;</b>
+                    {% if auth %}
+                        <a href="/edit?id={{ id }}">edit</a>
+                        <b>&frasl;</b>
+                        <a href="/delete/{{ id }}">erase</a>
+                    {% else %}
+                        <a href="/note/{{ id }}">
+                            {{ id|int|date_format("%A") }}
+                        </a>
+                    {% endif %}
+                </div>
+
+                <h4>
+                    <a class="title" target="_blank" href="{{ note.url }}">
+                        {{ note.title }}
+                    </a>
+                </h4>
+
+                {% if note.quote %}
+                    <p class="quote">{{ note.quote }}</p>
+                {% endif %}
+
+                {% if note.note %}
+                    <p class="note">{{ note.note }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="entry">
+            <div class="pages">
+                {% for number in range(1, pages + 1) %}
+                    <a class="{% if number == page %}selected{% endif %}" href="/?p={{ number }}">{{ number }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
