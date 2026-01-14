@@ -8,13 +8,13 @@
     "1767993521": {
         "url": "https://www.mihaileric.com/The-Emperor-Has-No-Clothes/",
         "title": "How to code Claude Code in 200 lines of code",
-        "quote": "But the core loop? It’s exactly what we built here. The LLM decides what to do, your code executes it, results flow back. That’s the whole architecture.",
+        "quote": "But the core loop? It's exactly what we built here. The LLM decides what to do, your code executes it, results flow back. That's the whole architecture.",
         "note": ""
     },
     "1614635375": {
         "url": "https://fs.blog/2021/03/thinking-rate-fixed/",
         "title": "Your thinking rate is fixed",
-        "quote": "You can’t force yourself to think faster. If you try, you’re likely to end up making much worse decisions.",
+        "quote": "You can't force yourself to think faster. If you try, you're likely to end up making much worse decisions.",
         "note": "The more you think about a problem the faster you solve it."
     },
     "1613569694": {
@@ -50,7 +50,7 @@
     "1591921895": {
         "url": "https://michaelfeathers.silvrback.com/functional-code-is-honest-code",
         "title": "Functional code is honest code",
-        "quote": "That’s the goal, really. Simplify understanding. No surprises. Honest code.",
+        "quote": "That's the goal, really. Simplify understanding. No surprises. Honest code.",
         "note": "Output depends only on input."
     },
     "1583351314": {
@@ -62,7 +62,7 @@
     "1571689715": {
         "url": "https://www.oreilly.com/learning/hadoop-with-python",
         "title": "Hadoop with Python",
-        "quote": "Spark can read files residing on the local filesystem, any storage source supported by Hadoop, Amazon S3, and so on. Spark supports text files, SequenceFiles, any other Hadoop Input‐ Format, directories, compressed files and wildcards.",
+        "quote": "Spark can read files residing on the local filesystem, any storage source supported by Hadoop, Amazon S3, and so on. Spark supports text files, SequenceFiles, any other Hadoop Input Format, directories, compressed files and wildcards.",
         "note": "I should I knew Spark can read compressed gigabyte CSVs."
     },
     "1569830154": {
@@ -433,7 +433,7 @@
     },
     "1476518064": {
         "url": "http://blog.etianen.com/blog/2013/06/08/django-querysets",
-        "title": "Using Django querysets effectively",
+        "title": "Using Django querysets effectively",
         "quote": "To avoid populating the queryset cache, but to still iterate over all your results, use the iterator() method to fetch the data in chunks, and throw away old rows when they've been processed.",
         "note": ""
     },
