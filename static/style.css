@@ -200,8 +200,10 @@ input.key { margin-bottom: 10px; }
 	.pages a {
 		border-right: var(--gainsboro) 1px solid;
 		color: var(--silver);
-		padding: 0 7px;
+		float: left;
+		padding: 0 9.5px;
 	}
+	.pages a:hover { color: var(--gray); }
 	.pages a:first-child { padding-left: 0; }
 	.pages a:last-child {
 		border-right: 0 none;
@@ -242,11 +244,13 @@ input.key { margin-bottom: 10px; }
 	color: var(--silver);
 	font-size: var(--caps);
 	letter-spacing: 1px;
+	overflow: hidden;
 	text-transform: uppercase;
 }
+	.meta a, .meta b { float: left; }
 	.meta a { color: var(--silver); }
 	.meta a:hover { color: var(--gray); }
-	.meta b { padding: 0 3px; }
+	.meta b { padding: 0 5px; }
 
 .footer {
 	color: var(--silver);
