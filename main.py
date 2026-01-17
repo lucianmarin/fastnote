@@ -9,24 +9,27 @@ from typing import Dict, Optional
 from fastapi import FastAPI, Request, Form, HTTPException, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
+from jinja2 import Environment, FileSystemBytecodeCache, FileSystemLoader
 
 from local import DEBUG, PASSWORD_HASH
+
+DATA_FILE = Path("notes.json")
 
 async def set_auth_state(request: Request):
     auth_cookie = request.cookies.get("auth")
     request.state.auth = auth_cookie == PASSWORD_HASH
 
 app = FastAPI(dependencies=[Depends(set_auth_state)])
+env = Environment(
+    loader=FileSystemLoader("templates"),
+    bytecode_cache=FileSystemBytecodeCache(),
+    enable_async=True
+)
+env.filters['email_format'] = lambda ts: formatdate(ts)
+env.filters['date_format'] = lambda ts, f: datetime.fromtimestamp(ts).strftime(f)
 
 if DEBUG:
     app.mount("/static", StaticFiles(directory="static"), name="static")
-
-templates = Jinja2Templates(directory="templates")
-templates.env.filters['email_format'] = lambda ts: formatdate(ts)
-templates.env.filters['date_format'] = lambda ts, f: datetime.fromtimestamp(ts).strftime(f)
-
-DATA_FILE = Path("notes.json")
 
 def get_notes() -> Dict[str, dict]:
     if not DATA_FILE.exists():
@@ -43,7 +46,6 @@ def put_notes(notes: Dict[str, dict]):
     with open(DATA_FILE, "w") as f:
         json.dump(sorted_notes, f, indent=4, ensure_ascii=False)
 
-
 def get_common_context(request: Request):
     return {
         "request": request,
@@ -52,7 +54,7 @@ def get_common_context(request: Request):
         "year": datetime.now().year
     }
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/")
 async def index(request: Request, p: int = 1):
     notes = get_notes()
     page = p if p > 0 else 1
@@ -73,9 +75,10 @@ async def index(request: Request, p: int = 1):
         "page": page,
         "pages": pages
     })
-    return templates.TemplateResponse("index.html", context)
+    content = await env.get_template("index.html").render_async(context)
+    return HTMLResponse(content)
 
-@app.get("/note/{id}", response_class=HTMLResponse)
+@app.get("/note/{id}")
 async def note(request: Request, id: str):
     notes = get_notes()
     if id not in notes:
@@ -100,9 +103,10 @@ async def note(request: Request, id: str):
         "previous_id": prev_id,
         "next_id": next_id
     })
-    return templates.TemplateResponse("note.html", context)
+    content = await env.get_template("note.html").render_async(context)
+    return HTMLResponse(content)
 
-@app.get("/search", response_class=HTMLResponse)
+@app.get("/search")
 async def search(request: Request, q: str = ""):
     notes = get_notes()
     limit = 16
@@ -126,15 +130,29 @@ async def search(request: Request, q: str = ""):
         "q": q,
         "label": label
     })
-    return templates.TemplateResponse("search.html", context)
+    content = await env.get_template("search.html").render_async(context)
+    return HTMLResponse(content)
 
-@app.get("/products", response_class=HTMLResponse)
+@app.get("/products")
 async def products(request: Request):
-    return templates.TemplateResponse("products.html", get_common_context(request))
+    context = get_common_context(request)
+    context.update({
+        "bicolor": 1.2,
+        "multicolor": 1.1,
+        "monochrome": 5.2
+    })
+    content = await env.get_template("products.html").render_async(context)
+    return HTMLResponse(content)
 
-@app.get("/about", response_class=HTMLResponse)
+@app.get("/about")
 async def about(request: Request):
-    return templates.TemplateResponse("about.html", get_common_context(request))
+    context = get_common_context(request)
+    context.update({
+        "email": "marin.lucian",
+        "phone": "+40 726 210 589",
+    })
+    content = await env.get_template("about.html").render_async(context)
+    return HTMLResponse(content)
 
 @app.get("/rss")
 async def rss(request: Request):
@@ -148,15 +166,17 @@ async def rss(request: Request):
         "notes": sliced_notes,
         "last_id": last_id
     }
-    return templates.TemplateResponse("rss.xml", context, media_type="application/rss+xml")
+    content = await env.get_template("rss.xml").render_async(context)
+    return HTMLResponse(content, media_type="application/rss+xml")
 
 # Auth Routes
 
-@app.get("/login", response_class=HTMLResponse)
+@app.get("/login")
 async def login_form(request: Request):
     if request.state.auth:
         return RedirectResponse(url="/")
-    return templates.TemplateResponse("login.html", get_common_context(request))
+    content = await env.get_template("login.html").render_async(get_common_context(request))
+    return HTMLResponse(content)
 
 @app.post("/login")
 async def login(request: Request, key: str = Form(...)):
@@ -178,7 +198,7 @@ async def logout():
 
 # Protected Routes
 
-@app.get("/edit", response_class=HTMLResponse)
+@app.get("/edit")
 async def edit_form(request: Request, id: Optional[str] = None):
     if not request.state.auth:
         return RedirectResponse(url="/")
@@ -194,7 +214,8 @@ async def edit_form(request: Request, id: Optional[str] = None):
         "note": note_data,
         "id": id if id else ""
     })
-    return templates.TemplateResponse("edit.html", context)
+    content = await env.get_template("edit.html").render_async(context)
+    return HTMLResponse(content)
 
 @app.post("/edit")
 async def edit_post(request: Request, url: str = Form(), title: str = Form(),
