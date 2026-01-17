@@ -4,11 +4,13 @@ import time
 from datetime import datetime
 from email.utils import formatdate
 from pathlib import Path
+from typing import Dict, Optional
+
 from fastapi import FastAPI, Request, Form, HTTPException, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from typing import Dict, Optional
+
 from local import DEBUG, PASSWORD_HASH
 
 async def set_auth_state(request: Request):
@@ -24,7 +26,7 @@ templates = Jinja2Templates(directory="templates")
 templates.env.filters['email_format'] = lambda ts: formatdate(ts)
 templates.env.filters['date_format'] = lambda ts, f: datetime.fromtimestamp(ts).strftime(f)
 
-DATA_FILE = Path("data/notes.json")
+DATA_FILE = Path("notes.json")
 
 def get_notes() -> Dict[str, dict]:
     if not DATA_FILE.exists():
@@ -38,7 +40,6 @@ def get_notes() -> Dict[str, dict]:
 def put_notes(notes: Dict[str, dict]):
     # Sort by key (timestamp) descending
     sorted_notes = dict(sorted(notes.items(), key=lambda item: item[0], reverse=True))
-
     with open(DATA_FILE, "w") as f:
         json.dump(sorted_notes, f, indent=4, ensure_ascii=False)
 
@@ -47,7 +48,8 @@ def get_common_context(request: Request):
     return {
         "request": request,
         "auth": request.state.auth,
-        "current_year": datetime.now().year
+        "path": request.url.path,
+        "year": datetime.now().year
     }
 
 @app.get("/", response_class=HTMLResponse)
