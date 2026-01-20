@@ -185,10 +185,8 @@ input.key { margin-bottom: 10px; }
 	padding: 10px var(--percent);
 }
 
-.link {
-	float: left;
-	width: 50%;
-}
+.links p { float: left; width: 50%; }
+.links p:first-child { float: none; width: auto; }
 
 .pages {
 	color: var(--silver);
