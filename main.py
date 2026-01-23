@@ -21,6 +21,8 @@ async def set_auth_state(request: Request):
 
 app = FastAPI(dependencies=[Depends(set_auth_state)])
 env = Environment(
+    autoescape=True,
+    auto_reload=DEBUG,
     loader=FileSystemLoader("templates"),
     bytecode_cache=FileSystemBytecodeCache(),
     enable_async=True
