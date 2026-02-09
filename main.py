@@ -220,8 +220,8 @@ async def edit_form(request: Request, id: Optional[str] = None):
     return HTMLResponse(content)
 
 @app.post("/edit")
-async def edit_post(request: Request, url: str = Form(), title: str = Form(),
-                    quote: str = Form(), note: str = Form(), id: str = Form()):
+async def edit_post(request: Request, url: str = Form(""), title: str = Form(""),
+                    quote: str = Form(""), note: str = Form(""), id: int = Form(0)):
     if not request.state.auth:
         raise HTTPException(status_code=403, detail="Not authenticated")
 
@@ -236,9 +236,9 @@ async def edit_post(request: Request, url: str = Form(), title: str = Form(),
 
     # If ID exists (edit), keep it. If not (new), generate timestamp.
     # PHP logic: $id = $_POST['id'] ? $_POST['id'] : time();
-    note_id = id if id else str(int(time.time()))
+    note_id = id if id else int(time.time())
 
-    notes[note_id] = new_note
+    notes[str(note_id)] = new_note
     put_notes(notes)
 
     return RedirectResponse(url=f"/note/{note_id}", status_code=303)
