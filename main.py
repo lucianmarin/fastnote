@@ -1,6 +1,7 @@
 import hashlib
 import json
 import time
+from contextlib import asynccontextmanager
 from datetime import datetime
 from email.utils import formatdate
 from pathlib import Path
@@ -14,12 +15,19 @@ from jinja2 import Environment, FileSystemBytecodeCache, FileSystemLoader
 from local import DEBUG, PASSWORD_HASH
 
 DATA_FILE = Path("notes.json")
+NOTES = {}
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global NOTES
+    NOTES = get_notes()
+    yield
 
 async def set_auth_state(request: Request):
     auth_cookie = request.cookies.get("auth")
     request.state.auth = auth_cookie == PASSWORD_HASH
 
-app = FastAPI(dependencies=[Depends(set_auth_state)])
+app = FastAPI(dependencies=[Depends(set_auth_state)], lifespan=lifespan)
 env = Environment(
     autoescape=True,
     auto_reload=DEBUG,
@@ -43,8 +51,10 @@ def get_notes() -> Dict[str, dict]:
             return {}
 
 def put_notes(notes: Dict[str, dict]):
+    global NOTES
     # Sort by key (timestamp) descending
     sorted_notes = dict(sorted(notes.items(), key=lambda item: item[0], reverse=True))
+    NOTES = sorted_notes
     with open(DATA_FILE, "w") as f:
         json.dump(sorted_notes, f, indent=4, ensure_ascii=False)
 
@@ -58,7 +68,7 @@ def get_common_context(request: Request):
 
 @app.get("/")
 async def index(request: Request, p: int = 1):
-    notes = get_notes()
+    notes = NOTES.copy()
     page = p if p > 0 else 1
     limit = 8
     offset = limit * (page - 1)
@@ -82,7 +92,7 @@ async def index(request: Request, p: int = 1):
 
 @app.get("/note/{id}")
 async def note(request: Request, id: str):
-    notes = get_notes()
+    notes = NOTES.copy()
     if id not in notes:
         raise HTTPException(status_code=404, detail="Note not found")
 
@@ -110,7 +120,7 @@ async def note(request: Request, id: str):
 
 @app.get("/search")
 async def search(request: Request, q: str = ""):
-    notes = get_notes()
+    notes = NOTES.copy()
     limit = 16
 
     results = {}
@@ -158,7 +168,7 @@ async def about(request: Request):
 
 @app.get("/rss")
 async def rss(request: Request):
-    notes = get_notes()
+    notes = NOTES.copy()
     limit = 16
     sliced_notes = dict(list(notes.items())[:limit])
     last_id = list(notes.keys())[0] if notes else int(time.time())
@@ -205,7 +215,7 @@ async def edit_form(request: Request, id: Optional[str] = None):
     if not request.state.auth:
         return RedirectResponse(url="/")
 
-    notes = get_notes()
+    notes = NOTES.copy()
     note_data = {"url": "", "title": "", "quote": "", "note": ""}
 
     if id and id in notes:
@@ -225,14 +235,8 @@ async def edit_post(request: Request, url: str = Form(""), title: str = Form("")
     if not request.state.auth:
         raise HTTPException(status_code=403, detail="Not authenticated")
 
-    notes = get_notes()
-
-    new_note = {
-        "url": url,
-        "title": title,
-        "quote": quote,
-        "note": note
-    }
+    notes = NOTES.copy()
+    new_note = {"url": url, "title": title, "quote": quote, "note": note}
 
     # If ID exists (edit), keep it. If not (new), generate timestamp.
     # PHP logic: $id = $_POST['id'] ? $_POST['id'] : time();
@@ -248,7 +252,7 @@ async def delete_note(request: Request, id: str):
     if not request.state.auth:
         return RedirectResponse(url="/")
 
-    notes = get_notes()
+    notes = NOTES.copy()
     if id in notes:
         del notes[id]
         put_notes(notes)
