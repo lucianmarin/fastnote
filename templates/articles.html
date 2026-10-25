@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main">
+    <div class="center">
+        {% for id, article in articles.items() %}
+            <div class="entry">
+                <div class="meta">
+                    <a target="_blank" href="{{ article.url }}">
+                        {{ id|int|date_format("%b %-d, %Y") }}
+                    </a>
+                    <b>&frasl;</b>
+                    <a target="_blank" href="{{ article.url }}">
+                        {{ id|int|date_format("%A") }}
+                    </a>
+                </div>
+
+                <h4>
+                    <a class="title" target="_blank" href="{{ article.url }}">
+                        {{ article.title }}
+                    </a>
+                </h4>
+
+                {% if article.quote %}
+                    <p class="quote">{{ article.quote }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

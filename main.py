@@ -1,5 +1,8 @@
+import calendar
 import hashlib
+import html
 import json
+import re
 import time
 from contextlib import asynccontextmanager
 from datetime import datetime
@@ -7,6 +10,7 @@ from email.utils import formatdate
 from pathlib import Path
 from typing import Dict, Optional
 
+import feedparser
 from fastapi import FastAPI, Request, Form, HTTPException, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -15,12 +19,15 @@ from jinja2 import Environment, FileSystemBytecodeCache, FileSystemLoader
 from local import DEBUG, PASSWORD_HASH
 
 DATA_FILE = Path("notes.json")
+FEED_URL = "https://lucianmarin.github.io/feed.rss"
 NOTES = {}
+ARTICLES = {}
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global NOTES
+    global NOTES, ARTICLES
     NOTES = get_notes()
+    ARTICLES = get_articles()
     yield
 
 async def set_auth_state(request: Request):
@@ -50,6 +57,20 @@ def get_notes() -> Dict[str, dict]:
         except json.JSONDecodeError:
             return {}
 
+def get_articles() -> Dict[str, dict]:
+    feed = feedparser.parse(FEED_URL)
+    articles = {}
+    for entry in feed.entries:
+        ts = str(int(calendar.timegm(entry.published_parsed)))
+        first_p = entry.summary.split("</p>")[0]
+        quote = html.unescape(re.sub(r"<[^>]+>", "", first_p)).strip()
+        articles[ts] = {
+            "url": entry.link,
+            "title": entry.title,
+            "quote": quote,
+        }
+    return articles
+
 def put_notes(notes: Dict[str, dict]):
     global NOTES
     # Sort by key (timestamp) descending
@@ -70,7 +91,7 @@ def get_common_context(request: Request):
 async def index(request: Request, p: int = 1):
     notes = NOTES.copy()
     page = p if p > 0 else 1
-    limit = 8
+    limit = 10
     offset = limit * (page - 1)
 
     # Slice dict items
@@ -121,7 +142,7 @@ async def note(request: Request, id: str):
 @app.get("/search")
 async def search(request: Request, q: str = ""):
     notes = NOTES.copy()
-    limit = 16
+    limit = 20
 
     results = {}
     if q:
@@ -145,24 +166,18 @@ async def search(request: Request, q: str = ""):
     content = await env.get_template("search.html").render_async(context)
     return HTMLResponse(content)
 
-@app.get("/products")
-async def products(request: Request):
+@app.get("/articles")
+async def articles(request: Request):
     context = get_common_context(request)
     context.update({
-        "bicolor": 1.2,
-        "multicolor": 1.1,
-        "monochrome": 5.2
+        "articles": ARTICLES.copy()
     })
-    content = await env.get_template("products.html").render_async(context)
+    content = await env.get_template("articles.html").render_async(context)
     return HTMLResponse(content)
 
 @app.get("/about")
 async def about(request: Request):
     context = get_common_context(request)
-    context.update({
-        "email": "marin.lucian",
-        "phone": "+40 726 210 589",
-    })
     content = await env.get_template("about.html").render_async(context)
     return HTMLResponse(content)
 
@@ -232,6 +247,7 @@ async def edit_form(request: Request, id: Optional[str] = None):
 @app.post("/edit")
 async def edit_post(request: Request, url: str = Form(""), title: str = Form(""),
                     quote: str = Form(""), note: str = Form(""), id: int = Form(0)):
+    global ARTICLES
     if not request.state.auth:
         raise HTTPException(status_code=403, detail="Not authenticated")
 
@@ -244,6 +260,7 @@ async def edit_post(request: Request, url: str = Form(""), title: str = Form("")
 
     notes[str(note_id)] = new_note
     put_notes(notes)
+    ARTICLES = get_articles()
 
     return RedirectResponse(url=f"/note/{note_id}", status_code=303)
 

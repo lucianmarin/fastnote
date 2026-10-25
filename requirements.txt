@@ -1,4 +1,5 @@
 fastapi
+feedparser
 jinja2
 python-multipart
 uvicorn
