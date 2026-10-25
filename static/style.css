@@ -178,6 +178,14 @@ input.key { margin-bottom: 10px; }
 		color: var(--gray);
 		cursor: text;
 	}
+	.entry .inline {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.entry .inline a {
+		color: var(--gray);
+	}
 	.entry .note {
 		color: var(--silver);
 		cursor: text;

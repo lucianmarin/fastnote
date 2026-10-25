@@ -20,7 +20,6 @@
                         </a>
                     {% endif %}
                 </div>
-
                 <h4>
                     <a class="prefix" target="_blank" href="{{ note.url }}">
                         {% if 'note' in note %}&sect;{% else %}&para;{% endif %}
@@ -29,11 +28,9 @@
                         {{ note.title }}
                     </a>
                 </h4>
-
                 {% if note.quote %}
                     <p class="quote">{{ note.quote }}</p>
                 {% endif %}
-
                 {% if note.note %}
                     <p class="note">{{ note.note }}</p>
                 {% endif %}

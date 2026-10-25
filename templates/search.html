@@ -12,8 +12,11 @@
                     <a class="prefix" target="_blank" href="{{ note.url }}">
                         {% if 'note' in note %}&sect;{% else %}&para;{% endif %}
                     </a>
-                    <a href="/{{ id }}">{{ note.title }}</a>
+                    <a target="_blank" href="{{ note.url }}">{{ note.title }}</a>
                 </h4>
+                {% if note.quote %}
+                    <p class="inline"><a href="/{{ id }}">{{ note.quote }}</a></p>
+                {% endif %}
             </div>
         {% endfor %}
         <div class="status">
