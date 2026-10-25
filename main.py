@@ -111,8 +111,9 @@ async def index(request: Request, p: int = 1):
     content = await env.get_template("index.html").render_async(context)
     return HTMLResponse(content)
 
-@app.get("/note/{id}")
-async def note(request: Request, id: str):
+@app.get("/{id:int}")
+async def note(request: Request, id: int):
+    id = str(id)
     if id in NOTES:
         notes = NOTES.copy()
     elif id in ARTICLES:
@@ -266,7 +267,7 @@ async def edit_post(request: Request, url: str = Form(""), title: str = Form("")
     put_notes(notes)
     ARTICLES = get_articles()
 
-    return RedirectResponse(url=f"/note/{note_id}", status_code=303)
+    return RedirectResponse(url=f"/{note_id}", status_code=303)
 
 @app.get("/delete/{id}")
 async def delete_note(request: Request, id: str):

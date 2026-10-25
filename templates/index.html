@@ -6,7 +6,7 @@
         {% for id, note in notes.items() %}
             <div class="entry">
                 <div class="meta">
-                    <a href="/note/{{ id }}">
+                    <a href="/{{ id }}">
                         {{ id|int|date_format("%b %-d, %Y") }}
                     </a>
                     <b>&frasl;</b>
@@ -15,7 +15,7 @@
                         <b>&frasl;</b>
                         <a href="/delete/{{ id }}">erase</a>
                     {% else %}
-                        <a href="/note/{{ id }}">
+                        <a href="/{{ id }}">
                             {{ id|int|date_format("%A") }}
                         </a>
                     {% endif %}

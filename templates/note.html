@@ -6,7 +6,7 @@
         <div class="entry">
             <div class="meta">
                 {% if previous_id %}
-                    <a href="/note/{{ previous_id }}">
+                    <a href="/{{ previous_id }}">
                         Backward
                     </a>
                 {% endif %}
@@ -14,7 +14,7 @@
                     <b>&frasl;</b>
                 {% endif %}
                 {% if next_id %}
-                    <a href="/note/{{ next_id }}">
+                    <a href="/{{ next_id }}">
                         Forward
                     </a>
                 {% endif %}
@@ -23,7 +23,7 @@
 
         <div class="entry">
             <div class="meta">
-                <a href="/note/{{ id }}">
+                <a href="/{{ id }}">
                     {{ id|int|date_format("%b %-d, %Y") }}
                 </a>
                 <b>&frasl;</b>
@@ -32,7 +32,7 @@
                     <b>&frasl;</b>
                     <a href="/delete/{{ id }}">erase</a>
                 {% else %}
-                    <a href="/note/{{ id }}">
+                    <a href="/{{ id }}">
                         {{ id|int|date_format("%A") }}
                     </a>
                 {% endif %}

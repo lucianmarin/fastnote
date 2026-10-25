@@ -6,11 +6,11 @@
         {% for id, article in articles.items() %}
             <div class="entry">
                 <div class="meta">
-                    <a href="/note/{{ id }}">
+                    <a href="/{{ id }}">
                         {{ id|int|date_format("%b %-d, %Y") }}
                     </a>
                     <b>&frasl;</b>
-                    <a href="/note/{{ id }}">
+                    <a href="/{{ id }}">
                         {{ id|int|date_format("%A") }}
                     </a>
                 </div>

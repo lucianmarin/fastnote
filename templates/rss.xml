@@ -13,7 +13,7 @@
             <description>{{ note.quote }}</description>
             <link>{{ note.url }}</link>
             <pubDate>{{ id|int|email_format }}</pubDate>
-            <guid>https://note.lucianmarin.com/note/{{ id }}</guid>
+            <guid>https://note.lucianmarin.com/{{ id }}</guid>
         </item>
         {% endfor %}
     </channel>

@@ -9,7 +9,7 @@
         {% for id, note in results.items() %}
             <div class="entry">
                 <h4>
-                    <a href="/note/{{ id }}">{{ note.title }}</a>
+                    <a href="/{{ id }}">{{ note.title }}</a>
                 </h4>
             </div>
         {% endfor %}
