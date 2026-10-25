@@ -104,6 +104,7 @@ async def index(request: Request, p: int = 1):
 
     context = get_common_context(request)
     context.update({
+        "title": "Notes",
         "notes": sliced_notes,
         "page": page,
         "pages": pages
@@ -135,6 +136,7 @@ async def note(request: Request, id: int):
 
     context = get_common_context(request)
     context.update({
+        "title": note_data["title"],
         "note": note_data,
         "id": id,
         "previous_id": prev_id,
@@ -163,6 +165,7 @@ async def search(request: Request, q: str = ""):
 
     context = get_common_context(request)
     context.update({
+        "title": "Search",
         "results": sliced_results,
         "q": q,
         "label": label
@@ -174,6 +177,7 @@ async def search(request: Request, q: str = ""):
 async def articles(request: Request):
     context = get_common_context(request)
     context.update({
+        "title": "Articles",
         "articles": ARTICLES.copy()
     })
     content = await env.get_template("articles.html").render_async(context)
@@ -182,6 +186,9 @@ async def articles(request: Request):
 @app.get("/about")
 async def about(request: Request):
     context = get_common_context(request)
+    context.update({
+        "title": "About"
+    })
     content = await env.get_template("about.html").render_async(context)
     return HTMLResponse(content)
 
@@ -207,7 +214,11 @@ async def rss(request: Request):
 async def login_form(request: Request):
     if request.state.auth:
         return RedirectResponse(url="/")
-    content = await env.get_template("login.html").render_async(get_common_context(request))
+    context = get_common_context(request)
+    context.update({
+        "title": "Login"
+    })
+    content = await env.get_template("login.html").render_async(context)
     return HTMLResponse(content)
 
 @app.post("/login")
@@ -243,6 +254,7 @@ async def edit_form(request: Request, id: Optional[str] = None):
 
     context = get_common_context(request)
     context.update({
+        "title": "Edit" if id else "Add",
         "note": note_data,
         "id": id if id else ""
     })
