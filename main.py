@@ -1,8 +1,6 @@
 import calendar
 import hashlib
-import html
 import json
-import re
 import time
 from contextlib import asynccontextmanager
 from datetime import datetime
@@ -62,12 +60,10 @@ def get_articles() -> Dict[str, dict]:
     articles = {}
     for entry in feed.entries:
         ts = str(int(calendar.timegm(entry.published_parsed)))
-        first_p = entry.summary.split("</p>")[0]
-        quote = html.unescape(re.sub(r"<[^>]+>", "", first_p)).strip()
         articles[ts] = {
             "url": entry.link,
             "title": entry.title,
-            "quote": quote,
+            "quote": entry.summary,
         }
     return articles
 
@@ -147,20 +143,29 @@ async def note(request: Request, id: int):
 
 @app.get("/search")
 async def search(request: Request, q: str = ""):
-    notes = NOTES.copy()
+    combined = {**NOTES, **ARTICLES}
+    items = dict(sorted(combined.items(), key=lambda item: int(item[0]), reverse=True))
     limit = 20
 
     results = {}
+    notes_count = 0
+    articles_count = 0
     if q:
         q_lower = q.lower()
-        for id, note in notes.items():
-            content = f"{note['url']} {note['title']} {note['quote']} {note['note']}".lower()
+        for id, item in items.items():
+            content = f"{item['url']} {item['title']} {item['quote']} {item.get('note', '')}".lower()
             if q_lower in content:
-                results[id] = note
+                results[id] = item
+                if id in NOTES:
+                    notes_count += 1
+                else:
+                    articles_count += 1
     else:
-        results = notes
+        results = items
+        notes_count = len(NOTES)
+        articles_count = len(ARTICLES)
 
-    label = f"{len(results)} recent notes"
+    label = f"{notes_count} notes and {articles_count} articles"
     sliced_results = dict(list(results.items())[:limit])
 
     context = get_common_context(request)
@@ -174,11 +179,25 @@ async def search(request: Request, q: str = ""):
     return HTMLResponse(content)
 
 @app.get("/articles")
-async def articles(request: Request):
+async def articles(request: Request, p: int = 1):
+    items = ARTICLES.copy()
+    page = p if p > 0 else 1
+    limit = 10
+    offset = limit * (page - 1)
+
+    articles_items = list(items.items())
+    count = len(articles_items)
+    pages = (count + limit - 1) // limit
+
+    sliced_items = articles_items[offset:offset + limit]
+    sliced_articles = dict(sliced_items)
+
     context = get_common_context(request)
     context.update({
         "title": "Articles",
-        "articles": ARTICLES.copy()
+        "articles": sliced_articles,
+        "page": page,
+        "pages": pages
     })
     content = await env.get_template("articles.html").render_async(context)
     return HTMLResponse(content)

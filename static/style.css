@@ -179,6 +179,14 @@ input.key { margin-bottom: 10px; }
 		color: var(--silver);
 		cursor: text;
 	}
+	.entry .prefix {
+		display: block;
+		color: var(--silver);
+		margin-left: calc(-1 * var(--percent));
+		float: left;
+		width: var(--percent);
+		text-align: center;
+	}
 
 .status {
 	color: var(--silver);
