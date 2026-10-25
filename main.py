@@ -85,13 +85,37 @@ def get_common_context(request: Request):
 
 @app.get("/")
 async def index(request: Request, p: int = 1):
-    notes = NOTES.copy()
+    combined = {**NOTES, **ARTICLES}
+    items = dict(sorted(combined.items(), key=lambda item: int(item[0]), reverse=True))
     page = p if p > 0 else 1
     limit = 10
     offset = limit * (page - 1)
 
-    # Slice dict items
-    notes_items = list(notes.items())
+    stream_items = list(items.items())
+    count = len(stream_items)
+    pages = (count + limit - 1) // limit  # ceil(count / limit)
+
+    sliced_items = stream_items[offset:offset + limit]
+    sliced_stream = dict(sliced_items)
+
+    context = get_common_context(request)
+    context.update({
+        "title": "Stream",
+        "notes": sliced_stream,
+        "page": page,
+        "pages": pages
+    })
+    content = await env.get_template("index.html").render_async(context)
+    return HTMLResponse(content)
+
+@app.get("/notes")
+async def notes(request: Request, p: int = 1):
+    items = NOTES.copy()
+    page = p if p > 0 else 1
+    limit = 10
+    offset = limit * (page - 1)
+
+    notes_items = list(items.items())
     count = len(notes_items)
     pages = (count + limit - 1) // limit  # ceil(count / limit)
 
@@ -165,15 +189,15 @@ async def search(request: Request, q: str = ""):
         notes_count = len(NOTES)
         articles_count = len(ARTICLES)
 
-    label = f"{notes_count} notes and {articles_count} articles"
     sliced_results = dict(list(results.items())[:limit])
 
     context = get_common_context(request)
     context.update({
         "title": "Search",
         "results": sliced_results,
-        "q": q,
-        "label": label
+        "notes": notes_count,
+        "articles": articles_count,
+        "q": q
     })
     content = await env.get_template("search.html").render_async(context)
     return HTMLResponse(content)
@@ -195,11 +219,11 @@ async def articles(request: Request, p: int = 1):
     context = get_common_context(request)
     context.update({
         "title": "Articles",
-        "articles": sliced_articles,
+        "notes": sliced_articles,
         "page": page,
         "pages": pages
     })
-    content = await env.get_template("articles.html").render_async(context)
+    content = await env.get_template("index.html").render_async(context)
     return HTMLResponse(content)
 
 @app.get("/about")

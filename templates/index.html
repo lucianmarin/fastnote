@@ -7,21 +7,24 @@
             <div class="entry">
                 <div class="meta">
                     <a href="/{{ id }}">
-                        {{ id|int|date_format("%b %-d, %Y") }}
+                        {{ id | int | date_format("%b %-d, %Y") }}
                     </a>
                     <b>&frasl;</b>
-                    {% if auth %}
-                        <a href="/edit?id={{ id }}">edit</a>
+                    {% if auth and 'note' in note %}
+                        <a href="/edit?id={{ id }}">Edit</a>
                         <b>&frasl;</b>
-                        <a href="/delete/{{ id }}">erase</a>
+                        <a href="/delete/{{ id }}">Erase</a>
                     {% else %}
                         <a href="/{{ id }}">
-                            {{ id|int|date_format("%A") }}
+                            {{ id | int | date_format("%A") }}
                         </a>
                     {% endif %}
                 </div>
 
                 <h4>
+                    <a class="prefix" target="_blank" href="{{ note.url }}">
+                        {% if 'note' in note %}&sect;{% else %}&para;{% endif %}
+                    </a>
                     <a class="title" target="_blank" href="{{ note.url }}">
                         {{ note.title }}
                     </a>
@@ -40,7 +43,7 @@
         <div class="entry">
             <div class="pages">
                 {% for number in range(1, pages + 1) %}
-                    <a class="{% if number == page %}selected{% endif %}" href="/?p={{ number }}">{{ number }}</a>
+                    <a class="{% if number == page %}selected{% endif %}" href="{{ path }}?p={{ number }}">{{ number }}</a>
                 {% endfor %}
             </div>
         </div>

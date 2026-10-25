@@ -9,12 +9,14 @@
         {% for id, note in results.items() %}
             <div class="entry">
                 <h4>
-                    <a class="prefix" target="_blank" href="{{ note.url }}">{% if 'note' in note %}&sect;{% else %}&para;{% endif %}</a>
+                    <a class="prefix" target="_blank" href="{{ note.url }}">
+                        {% if 'note' in note %}&sect;{% else %}&para;{% endif %}
+                    </a>
                     <a href="/{{ id }}">{{ note.title }}</a>
                 </h4>
             </div>
         {% endfor %}
-        <div class="status">{{ label }}</div>
+        <div class="status">{{ notes }} notes and {{ articles }} articles</div>
     </div>
 </div>
 {% endblock %}
