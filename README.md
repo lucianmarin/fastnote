@@ -1,5 +1,7 @@
 # Fastnote
 
+![screenshot](screenshot.png)
+
 Note keeping and link sharing done with FastAPI and a single JSON file.
 
 ## Setup
