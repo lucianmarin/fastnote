@@ -16,7 +16,9 @@
                 </h4>
             </div>
         {% endfor %}
-        <div class="status">{{ notes }} notes and {{ articles }} articles</div>
+        <div class="status">
+            {{ notes }} note{% if notes != 1 %}s{% endif %} and {{ articles }} article{% if articles != 1 %}s{% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}
