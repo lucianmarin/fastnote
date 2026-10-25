@@ -1,5 +1,5 @@
 [Unit]
-Description=Nostr service
+Description=Note service
 After=network.target nginx.service
 
 [Service]
