@@ -2,8 +2,8 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Lucian Marin</title>
-        <description>Notes by Lucian Marin</description>
-        <link>https://lucianmarin.com/</link>
+        <description>Notes and articles by Lucian Marin</description>
+        <link>https://note.lucianmarin.com/</link>
         <language>en-us</language>
         <pubDate>{{ last_id|int|email_format }}</pubDate>
         <lastBuildDate>{{ last_id|int|email_format }}</lastBuildDate>
@@ -13,7 +13,7 @@
             <description>{{ note.quote }}</description>
             <link>{{ note.url }}</link>
             <pubDate>{{ id|int|email_format }}</pubDate>
-            <guid>https://lucianmarin.com/note/{{ id }}</guid>
+            <guid>https://note.lucianmarin.com/note/{{ id }}</guid>
         </item>
         {% endfor %}
     </channel>

@@ -113,8 +113,11 @@ async def index(request: Request, p: int = 1):
 
 @app.get("/note/{id}")
 async def note(request: Request, id: str):
-    notes = NOTES.copy()
-    if id not in notes:
+    if id in NOTES:
+        notes = NOTES.copy()
+    elif id in ARTICLES:
+        notes = ARTICLES.copy()
+    else:
         raise HTTPException(status_code=404, detail="Note not found")
 
     note_data = notes[id]
@@ -183,8 +186,9 @@ async def about(request: Request):
 
 @app.get("/rss")
 async def rss(request: Request):
-    notes = NOTES.copy()
-    limit = 16
+    combined = {**NOTES, **ARTICLES}
+    notes = dict(sorted(combined.items(), key=lambda item: int(item[0]), reverse=True))
+    limit = 20
     sliced_notes = dict(list(notes.items())[:limit])
     last_id = list(notes.keys())[0] if notes else int(time.time())
 
