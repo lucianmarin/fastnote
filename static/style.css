@@ -5,7 +5,7 @@ html {
 	--caps: 10px;
 	--big: 18px;
 	--small: 12px;
-	--percent: 5%;
+	--percent: 7.5%;
 	--d: 0.2s;
 	--silver: #a0a0a0;
 	--gray: #606060;
@@ -71,7 +71,7 @@ a {
 
 .center {
 	margin: 0 auto;
-	max-width: 480px;
+	max-width: 512px;
 }
 
 .main {
@@ -103,6 +103,9 @@ h1 {
 	line-height: 25px;
 	margin-left: var(--percent);
 	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	height: 25px;
 }
 	h1 a {
 		color: var(--silver);
@@ -202,8 +205,9 @@ input.key { margin-bottom: 10px; }
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	height: 20px;
 }
-	.pages a {
+	.pages a, .pages b {
 		border-right: var(--gainsboro) 1px solid;
 		color: var(--silver);
 		float: left;
@@ -211,7 +215,7 @@ input.key { margin-bottom: 10px; }
 	}
 	.pages a:hover { color: var(--gray); }
 	.pages a:first-child { padding-left: 0; }
-	.pages a:last-child {
+	.pages a:last-child, .pages b:last-child {
 		border-right: 0 none;
 		padding-right: 0;
 	}
