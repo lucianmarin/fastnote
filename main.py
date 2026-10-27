@@ -100,7 +100,7 @@ async def index(request: Request, p: int = 1):
 
     context = get_common_context(request)
     context.update({
-        "title": "Stream",
+        "title": "Lucian's stream",
         "notes": sliced_stream,
         "page": page,
         "pages": pages
@@ -124,7 +124,7 @@ async def notes(request: Request, p: int = 1):
 
     context = get_common_context(request)
     context.update({
-        "title": "Notes",
+        "title": "Lucian's notes",
         "notes": sliced_notes,
         "page": page,
         "pages": pages
@@ -193,7 +193,7 @@ async def search(request: Request, q: str = ""):
 
     context = get_common_context(request)
     context.update({
-        "title": "Search",
+        "title": "Search notes and articles",
         "results": sliced_results,
         "notes": notes_count,
         "articles": articles_count,
@@ -218,7 +218,7 @@ async def articles(request: Request, p: int = 1):
 
     context = get_common_context(request)
     context.update({
-        "title": "Articles",
+        "title": "Lucian's articles",
         "notes": sliced_articles,
         "page": page,
         "pages": pages
@@ -230,7 +230,7 @@ async def articles(request: Request, p: int = 1):
 async def about(request: Request):
     context = get_common_context(request)
     context.update({
-        "title": "About"
+        "title": "About Lucian"
     })
     content = await env.get_template("about.html").render_async(context)
     return HTMLResponse(content)
@@ -297,7 +297,7 @@ async def edit_form(request: Request, id: Optional[str] = None):
 
     context = get_common_context(request)
     context.update({
-        "title": "Edit" if id else "Add",
+        "title": "Edit note" if id else "Add note",
         "note": note_data,
         "id": id if id else ""
     })
