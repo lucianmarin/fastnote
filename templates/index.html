@@ -7,7 +7,7 @@
             <div class="entry">
                 <div class="meta">
                     <a href="/{{ id }}">
-                        {{ id | int | date_format("%b %-d, %Y") }}
+                        {{ id | date_format("%b %-d, %Y") }}
                     </a>
                     <b>&frasl;</b>
                     {% if auth and 'note' in note %}
@@ -16,7 +16,7 @@
                         <a href="/delete/{{ id }}">Erase</a>
                     {% else %}
                         <a href="/{{ id }}">
-                            {{ id | int | date_format("%A") }}
+                            {{ id | date_format("%A") }}
                         </a>
                     {% endif %}
                 </div>

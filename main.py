@@ -1,9 +1,8 @@
-import calendar
 import hashlib
 import json
 import time
 from contextlib import asynccontextmanager
-from datetime import datetime
+from datetime import datetime, timezone
 from email.utils import formatdate
 from pathlib import Path
 from typing import Dict, Optional
@@ -40,8 +39,8 @@ env = Environment(
     bytecode_cache=FileSystemBytecodeCache(),
     enable_async=True
 )
-env.filters['email_format'] = lambda ts: formatdate(ts)
-env.filters['date_format'] = lambda ts, f: datetime.fromtimestamp(ts).strftime(f)
+env.filters['email_format'] = lambda ts: formatdate(datetime.strptime(str(ts), "%Y%m%d%H%M").replace(tzinfo=timezone.utc).timestamp())
+env.filters['date_format'] = lambda ts, f: datetime.strptime(str(ts), "%Y%m%d%H%M").replace(tzinfo=timezone.utc).strftime(f)
 
 if DEBUG:
     app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -59,7 +58,7 @@ def get_articles() -> Dict[str, dict]:
     feed = feedparser.parse(FEED_URL)
     articles = {}
     for entry in feed.entries:
-        ts = str(int(calendar.timegm(entry.published_parsed)))
+        ts = time.strftime("%Y%m%d%H%M", entry.published_parsed)
         articles[ts] = {
             "url": entry.link,
             "title": entry.title,
@@ -80,7 +79,7 @@ def get_common_context(request: Request):
         "request": request,
         "auth": request.state.auth,
         "path": request.url.path,
-        "year": datetime.now().year
+        "year": datetime.now(timezone.utc).year
     }
 
 @app.get("/")
@@ -241,7 +240,7 @@ async def rss(request: Request):
     notes = dict(sorted(combined.items(), key=lambda item: int(item[0]), reverse=True))
     limit = 20
     sliced_notes = dict(list(notes.items())[:limit])
-    last_id = list(notes.keys())[0] if notes else int(time.time())
+    last_id = list(notes.keys())[0] if notes else datetime.now(timezone.utc).strftime("%Y%m%d%H%M")
 
     context = {
         "request": request,
@@ -306,7 +305,7 @@ async def edit_form(request: Request, id: Optional[str] = None):
 
 @app.post("/edit")
 async def edit_post(request: Request, url: str = Form(""), title: str = Form(""),
-                    quote: str = Form(""), note: str = Form(""), id: int = Form(0)):
+                    quote: str = Form(""), note: str = Form(""), id: str = Form("")):
     global ARTICLES
     if not request.state.auth:
         raise HTTPException(status_code=403, detail="Not authenticated")
@@ -315,8 +314,7 @@ async def edit_post(request: Request, url: str = Form(""), title: str = Form("")
     new_note = {"url": url, "title": title, "quote": quote, "note": note}
 
     # If ID exists (edit), keep it. If not (new), generate timestamp.
-    # PHP logic: $id = $_POST['id'] ? $_POST['id'] : time();
-    note_id = id if id else int(time.time())
+    note_id = id if id else datetime.now(timezone.utc).strftime("%Y%m%d%H%M")
 
     notes[str(note_id)] = new_note
     put_notes(notes)

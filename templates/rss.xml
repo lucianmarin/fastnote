@@ -5,14 +5,14 @@
         <description>Notes and articles by Lucian Marin</description>
         <link>https://note.lucianmarin.com/</link>
         <language>en-us</language>
-        <pubDate>{{ last_id|int|email_format }}</pubDate>
-        <lastBuildDate>{{ last_id|int|email_format }}</lastBuildDate>
+        <pubDate>{{ last_id | email_format }}</pubDate>
+        <lastBuildDate>{{ last_id | email_format }}</lastBuildDate>
         {% for id, note in notes.items() %}
         <item>
             <title>{{ note.title }}</title>
             <description>{{ note.quote }}</description>
             <link>{{ note.url }}</link>
-            <pubDate>{{ id|int|email_format }}</pubDate>
+            <pubDate>{{ id | email_format }}</pubDate>
             <guid>https://note.lucianmarin.com/{{ id }}</guid>
         </item>
         {% endfor %}
