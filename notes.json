@@ -9,7 +9,7 @@
         "url": "https://www.vibekanban.com/vibe-guide",
         "title": "Vibe Guide",
         "quote": "Tips and best practices for working with AI coding agents. Honestly, we don't have consensus at Vibe Kanban HQ for how to work with coding agents - everyone uses different tools, in different ways. This is just how Louis does it.",
-        "note": "AI era of software starts here."
+        "note": "The AI era of software starts here."
     },
     "1767993521": {
         "url": "https://www.mihaileric.com/The-Emperor-Has-No-Clothes/",
@@ -21,7 +21,7 @@
         "url": "https://fs.blog/2021/03/thinking-rate-fixed/",
         "title": "Your thinking rate is fixed",
         "quote": "You can't force yourself to think faster. If you try, you're likely to end up making much worse decisions.",
-        "note": "The more you think about a problem the faster you solve it."
+        "note": "The more you think about a problem, the faster you solve it."
     },
     "1613569694": {
         "url": "https://pythonnumericalmethods.berkeley.edu/notebooks/Index.html",
@@ -45,7 +45,7 @@
         "url": "https://en.wikipedia.org/wiki/I_Am_a_Strange_Loop",
         "title": "I am a strange loop",
         "quote": "In the end, we are self-perceiving, self-inventing, locked-in mirages that are little miracles of self-reference.",
-        "note": "Future is defined by things we want to improve from our past."
+        "note": "The future is defined by the things we want to improve from our past."
     },
     "1593410332": {
         "url": "https://deniseyu.io/2020/05/23/habits-of-high-performing-teams.html",
@@ -63,19 +63,19 @@
         "url": "https://findwork.dev/blog/advanced-usage-python-requests-timeouts-retries-hooks/",
         "title": "Advanced usage of requests",
         "quote": "BaseUrlSession allows you to specify the base URL for the HTTP client and to only specify the resource path at the time of the request.",
-        "note": "The opposite of requests is Falcon which lets you speak HTTP."
+        "note": "The opposite of requests is Falcon, which lets you speak HTTP."
     },
     "1571689715": {
         "url": "https://www.oreilly.com/learning/hadoop-with-python",
         "title": "Hadoop with Python",
         "quote": "Spark can read files residing on the local filesystem, any storage source supported by Hadoop, Amazon S3, and so on. Spark supports text files, SequenceFiles, any other Hadoop Input Format, directories, compressed files and wildcards.",
-        "note": "I should I knew Spark can read compressed gigabyte CSVs."
+        "note": "I wish I knew Spark could read compressed gigabyte CSVs."
     },
     "1569830154": {
         "url": "https://martinheinz.dev/blog/1",
         "title": "Python tips and tricks you haven't seen",
-        "quote": "I want to note that all those features are part of Python standard library, so whenever you decide to implement something in Python first go looking for it in standard library.",
-        "note": "Improve performance of your Python program."
+        "quote": "I want to note that all those features are part of the Python standard library, so whenever you decide to implement something in Python, first go looking for it in the standard library.",
+        "note": "Improve the performance of your Python program."
     },
     "1564172032": {
         "url": "https://teddymarchildon.com/blog/1",
@@ -93,7 +93,7 @@
         "url": "https://www.japantimes.co.jp/news/2019/05/14/national/japan-plans-create-10-billion-14-digit-phone-numbers-5g-era-approaching/",
         "title": "Japan plans to create 10 billion 14-digit phone numbers",
         "quote": "With the commercialization of the fifth-generation, or 5G, of superfast mobile communication format approaching, 11-digit numbers are expected to run out as early as fiscal 2022.",
-        "note": "What's wrong with case insensitive letters? US-ABC-900-900 can be a beautiful phone number and global. 165,216,101,262,848 phone numbers per country."
+        "note": "What's wrong with case-insensitive letters? US-ABC-900-900 can be a beautiful, global phone number. 165,216,101,262,848 phone numbers per country."
     },
     "1557338893": {
         "url": "http://ryanflorence.com/deploying-websites-with-a-tiny-git-hook/",
@@ -111,7 +111,7 @@
         "url": "https://python-3-patterns-idioms-test.readthedocs.io/en/latest/PythonDecorators.html",
         "title": "Python decorators with arguments",
         "quote": "The return value of the decorator function must be a function used to wrap the function to be decorated. That is, Python will take the returned function and call it at decoration time, passing the function to be decorated.",
-        "note": "Helped me turn any method in a managed task."
+        "note": "Helped me turn any method into a managed task."
     },
     "1546532416": {
         "url": "https://niallburkley.com/blog/index-columns-for-like-in-postgres/",
@@ -128,7 +128,7 @@
     "1543501003": {
         "url": "https://docs.quantifiedcode.com/python-anti-patterns/index.html",
         "title": "Python anti-patterns",
-        "quote": "We think that you can learn as much from reading bad code as you can from reading good one.",
+        "quote": "We think that you can learn as much from reading bad code as you can from reading good code.",
         "note": ""
     },
     "1539807240": {
@@ -146,14 +146,14 @@
     "1537192666": {
         "url": "https://commoncog.com/blog/so-good-they-cant-ignore-you/",
         "title": "So good they can't ignore you",
-        "quote": "Following your passion is bad, instead go for Mastery, Autonomy and Purpose — the trio of things that have been proven to motivate knowledge workers.",
+        "quote": "Following your passion is bad; instead, go for Mastery, Autonomy and Purpose — the trio of things that have been proven to motivate knowledge workers.",
         "note": ""
     },
     "1536453455": {
         "url": "http://michal.karzynski.pl/blog/2010/10/19/run-multiple-websites-one-django-project/",
         "title": "How to run multiple websites from one Django project",
-        "quote": "The subdomain specific settings files will inherit all the defaults from the common settings.py file, and override only those values which are specific to the domain.",
-        "note": "WSGI app files are the key of running multiple subdomains."
+        "quote": "The subdomain-specific settings files will inherit all the defaults from the common settings.py file, and override only those values which are specific to the domain.",
+        "note": "WSGI app files are the key to running multiple subdomains."
     },
     "1536161274": {
         "url": "https://thorstenball.com/blog/2018/09/04/the-tools-i-use-to-write-books/",
@@ -224,13 +224,13 @@
     "1497816161": {
         "url": "https://www.kaoruk.com/posts/06-18-2017-tuning-postgresql-queries",
         "title": "Tuning PostgreSQL queries",
-        "quote": "There are no hard and fast rules when it comes to optimizing sql queries.",
+        "quote": "There are no hard and fast rules when it comes to optimizing SQL queries.",
         "note": ""
     },
     "1496011659": {
         "url": "https://www.ibm.com/developerworks/linux/library/l-tip-prompt/",
         "title": "Prompt magic",
-        "quote": "Enhancing the system prompt",
+        "quote": "Enhancing the system prompt.",
         "note": ""
     },
     "1495732106": {
@@ -242,7 +242,7 @@
     "1494621252": {
         "url": "https://kierantie.com/a/burnout/",
         "title": "Recovering from burnout",
-        "quote": "In book, The Truth About Burnout, they outline six major imbalances between employees and their work that often lead to burnout. (...) You don't need to have a serious mismatch in all six of these areas to be at risk. In fact, a mismatch in even one area can put you on the path to burnout.",
+        "quote": "In the book, The Truth About Burnout, they outline six major imbalances between employees and their work that often lead to burnout. (...) You don't need to have a serious mismatch in all six of these areas to be at risk. In fact, a mismatch in even one area can put you on the path to burnout.",
         "note": ""
     },
     "1493391817": {
@@ -254,13 +254,13 @@
     "1492280715": {
         "url": "http://portaller.com/",
         "title": "Portaller",
-        "quote": "DNS and proxy server. Since it is located in NY you can use geo-locked websites in countries outside U.S.",
+        "quote": "DNS and proxy server. Since it is located in NY, you can use geo-locked websites in countries outside the U.S.",
         "note": "It makes Pithos work."
     },
     "1492178274": {
         "url": "https://forums.macrumors.com/threads/potential-iphone-8-render-shows-vertical-camera-and-rear-touch-id-but-likely-one-of-several-designs.2041636/page-14#post-24495371",
         "title": "Apple's innovation is gone",
-        "quote": "They forgot about what made them great in the first place and are totally profit driven. Reminds me of when Steve left Apple years ago. Same crap happened. Almost idenical. He is the new Scully.",
+        "quote": "They forgot about what made them great in the first place and are totally profit-driven. Reminds me of when Steve left Apple years ago. Same crap happened. Almost identical. He is the new Scully.",
         "note": "Totally agree with this."
     },
     "1491985290": {
@@ -278,14 +278,14 @@
     "1490807743": {
         "url": "http://benchmarksgame.alioth.debian.org",
         "title": "Benchmarks game",
-        "quote": "Will your toy benchmark program be faster if you write it in a different programming language? It depends how you write it!",
+        "quote": "Will your toy benchmark program be faster if you write it in a different programming language? It depends on how you write it!",
         "note": "I have to keep an eye on this."
     },
     "1490645297": {
         "url": "http://www.acnemilk.com/the_no_milk_acne_diet",
         "title": "No milk acne diet",
         "quote": "Oil gland pores are plugged by the overproduction of the cells that line the pore. Basically a traffic jam happens in the pore. There are several sources of hormones that cause this overproduction. The first is ovaries or testicles, the second is the adrenal (stress) glands and the third is dairy products.",
-        "note": "Stress and milk don't mix up pretty well."
+        "note": "Stress and milk don't mix very well."
     },
     "1490524417": {
         "url": "https://metacademy.org/roadmaps/rgrosse/learn_on_your_own",
@@ -314,8 +314,8 @@
     "1487069563": {
         "url": "http://renesd.blogspot.ro/2017/02/is-postgresql-good-enough.html",
         "title": "Is PostgreSQL good enough?",
-        "quote": "tldr; you can do jobs, queues, real time change feeds, time series, object store, document store, full text search with PostgreSQL. How to, pros/cons, rough performance and complexity levels are all discussed. Many sources and relevant documentation is linked to.",
-        "note": "I need to store avatars from Sublevel in PostgreSQL for consistency but keep serving them with nginx."
+        "quote": "tldr; you can do jobs, queues, real time change feeds, time series, object store, document store, full text search with PostgreSQL. How to, pros/cons, rough performance and complexity levels are all discussed. Many sources and relevant documentation are linked to.",
+        "note": "I need to store avatars from Sublevel in PostgreSQL for consistency, but keep serving them with nginx."
     },
     "1487017135": {
         "url": "https://philipwalton.com/articles/the-google-analytics-setup-i-use-on-every-site-i-build/",
@@ -326,7 +326,7 @@
     "1486988785": {
         "url": "https://certsimple.com/blog/nginx-http2-load-balancing-config",
         "title": "An nginx.conf for 2017",
-        "quote": "With HTTP/2 in every browser, load balancing with automatic failover, IPV6, a sorry page, separate blog server, HTML5 SSE and A+ HTTPS.",
+        "quote": "With HTTP/2 in every browser, load balancing with automatic failover, IPv6, a sorry page, separate blog server, HTML5 SSE and A+ HTTPS.",
         "note": "A good way to separate https.conf from domain.conf files."
     },
     "1485159166": {
@@ -339,12 +339,12 @@
         "url": "http://kevinmahoney.co.uk/articles/django-orm-mistakes/",
         "title": "A few Django ORM mistakes",
         "quote": "See if you can figure out what's wrong with the code snippets below! Ask yourself what the problem is, what effect will it have, and how can you fix it? These examples are for Django, but probably apply to many other ORMs.",
-        "note": "I used bug 2 & 3 solutions for Sublevel."
+        "note": "I used the solutions for bugs 2 and 3 on Sublevel."
     },
     "1484836205": {
         "url": "https://thecraftymummyblog.wordpress.com/2016/02/06/diy-chocolate-croissants-5-min-prep/",
         "title": "DIY chocolate croissants",
-        "quote": "Puff pastry costed €0.99 and I made 10 croissants! Kinder chocolate bars were already home since my eldest child (read: husband) loves them! ",
+        "quote": "Puff pastry cost €0.99 and I made 10 croissants! Kinder chocolate bars were already at home since my eldest child (read: husband) loves them!",
         "note": "I need to try this as soon as possible."
     },
     "1482771767": {
@@ -387,7 +387,7 @@
         "url": "http://www.jessyoko.com/blog/2012/11/07/why-startup-founders-are-always-unhappy/",
         "title": "Why startup founders are always unhappy",
         "quote": "My theory is that a founder's happiness is tied to the rate of change of their startup's success. In other words, your happiness graph is the first derivative of your success graph.",
-        "note": "I came a long way with Sublevel but I'm still unhappy."
+        "note": "I've come a long way with Sublevel, but I'm still unhappy."
     },
     "1479123462": {
         "url": "https://blog.appdynamics.com/python/a-performance-analysis-of-python-wsgi-servers-part-2/",
@@ -410,7 +410,7 @@
     "1478509745": {
         "url": "http://nichol.as/benchmark-of-python-web-servers",
         "title": "Benchmark of Python WSGI servers",
-        "quote": "So that is what we are going to do, we are going to take the top-3 performing WSGI servers namely Tornado, Gevent and uWSGI (FAPWS3 lack of HTTP/1.1 support made it unsuitable for this benchmark) and give them 5 minutes of ping-pong mayhem.",
+        "quote": "So that is what we are going to do: we are going to take the top 3 performing WSGI servers, namely Tornado, Gevent and uWSGI (FAPWS3's lack of HTTP/1.1 support made it unsuitable for this benchmark), and give them 5 minutes of ping-pong mayhem.",
         "note": ""
     },
     "1477811141": {
@@ -434,8 +434,8 @@
     "1476558622": {
         "url": "https://kext.io/2016/10/03/a-base-filesystem-project/",
         "title": "A base filesystem project",
-        "quote": "I've pushed a basic remote macOS filesystem project to GitHub. Its got all the bits and pieces necessary to work but I haven't audited all parts of it for correctness.",
-        "note": "I should build a SFTP file system too."
+        "quote": "I've pushed a basic remote macOS filesystem project to GitHub. It's got all the bits and pieces necessary to work, but I haven't audited all parts of it for correctness.",
+        "note": "I should build an SFTP filesystem too."
     },
     "1476518064": {
         "url": "http://blog.etianen.com/blog/2013/06/08/django-querysets",
